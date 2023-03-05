@@ -24,7 +24,7 @@ public class Minha {
 		//declaração da variável idade
 		idade = (ano * 365) + (meses * 30) + dias;
 		
-		
+		//Impressão da variável
 		System.out.printf("%d anos, %d meses e %d dias equivale a= %d dias.",ano,meses,dias,idade);
 		
 		}
