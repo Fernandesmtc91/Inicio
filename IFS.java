@@ -1,101 +1,55 @@
 package Controle;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
-public class IFS {
-	public static void main(String[] args) {
-		Scanner entrada = new Scanner(System.in);
-		
-		String vacina1 = "";
-		String vacina2 = "";
-		String vacina3 = "";
-		String vacina4 = "";
-		int meses = 0;
-		
-		System.out.println("Quantos meses voce tem?");
-		meses = entrada.nextInt();
-		
-		entrada.nextLine();
-		
-		System.out.println("Qual a primeira vacina?");
-		vacina1 = entrada.nextLine();
-		if(vacina1.equals("meningo") && meses == 3){
-			System.out.println("Voce tomou a vacina de tres meses");
-			return;
-		}
-		
-		if(vacina1.equals("meningo") && meses == 5){
-			System.out.println("Voce tomou a vacina de cinco meses");
-		}
-		else {	
-		System.out.println("Qual a segunda vacina? Se nao tomou digite n");
-		vacina2 = entrada.nextLine();
-		
-		if(vacina1.equals("bcg") && vacina2.equals("hepatite b")) {
-		System.out.println("Voce tomou a vacina que se toma ao nascer.");
-		}
-		
-		
-		else {
-		System.out.println("Qual a terceira vacina? Se nao tomar digite n");
-		vacina3 = entrada.nextLine();
-		
-		
-		System.out.println("Qual a quarta vacina?se nao tomou digite n");
-		vacina4 = entrada.nextLine();
-		}
-		
-		if(vacina1.equals("penta") 
-		&& vacina2.equals("vip") 
-		&& vacina3.equals("pneumo") 
-		&& vacina4.equals("rotavirus")
-		&& meses == 2) {
-			System.out.println("Voce tomou a vacina de 2 meses.");}
-		
-		if(vacina1.equals("penta") 
-				&& vacina2.equals("vip") 
-				&& vacina3.equals("pneumo") 
-				&& vacina4.equals("rotavirus")
-				&& meses == 4) {
-				System.out.println("Voce tomou a vacina de 4 meses.");}
-		}
-		if(vacina1.equals("penta") 
-			&& vacina3.equals("vip") 
-			&& vacina4.equals("scr")
-			&& meses == 6){
-			System.out.println("Voce tomou a vacina de 6 meses as vacinas sao: "+ vacina1+vacina2+vacina3+vacina4);
-		}
-		if(vacina1.equals("penta") 
-				&& vacina2.equals("vip") 
-				&& vacina3.equals("scr")
-				&& meses == 6){
-				System.out.println("Voce tomou a vacina de 6 meses");
-		}
-		if(vacina1.equals("febre amarela") && meses ==9) {
-				System.out.println("Voce tomou a vacina de 9 meses");
-		}
-		if(vacina1.equals("pneumo") 
-				&& vacina2.equals("meningo") 
-				&& vacina3.equals("scr")
-				&& meses == 12){
-				System.out.println("Voce tomou a vacina de 12 meses");
-		}
-		
-		if(vacina1.equals("dtp") 
-				&& vacina2.equals("vop") 
-				&& vacina3.equals("hepatite a")
-				&& vacina4.equals("tetra viral")
-				&& meses == 15){
-				System.out.println("Voce tomou a vacina de 15 meses");
-		}		
-		if(vacina1.equals("dtp")
-		   && vacina2.equals("vop")
-		   && vacina3.equals("varicela")
-		   && meses > 15){
-			System.out.println("Voce tomou a vacina de 4 anos");
-		}
-	}
-}	
+public class SistemaVacinas {
+    public static void main(String[] args) {
+        Scanner entrada = new Scanner(System.in);
 
+        System.out.println("Quantos meses voce tem?");
+        int meses = entrada.nextInt();
+        entrada.nextLine(); // Limpar buffer
 
+        // Lista para armazenar vacinas
+        List<String> vacinas = new ArrayList<>();
 
+        for (int i = 1; i <= 4; i++) {
+            System.out.printf("Qual a %da vacina? (Digite 'n' se nao tomou)%n", i);
+            String vacina = entrada.nextLine().toLowerCase();
+            if (!vacina.equals("n")) {
+                vacinas.add(vacina);
+            }
+        }
 
+        // Verificar vacinas por idade
+        verificarVacinas(meses, vacinas);
+
+        entrada.close();
+    }
+
+    private static void verificarVacinas(int meses, List<String> vacinas) {
+        if (meses == 3 && vacinas.contains("meningo")) {
+            System.out.println("Voce tomou a vacina de 3 meses.");
+        } else if (meses == 5 && vacinas.contains("meningo")) {
+            System.out.println("Voce tomou a vacina de 5 meses.");
+        } else if (meses == 2 && vacinas.containsAll(List.of("penta", "vip", "pneumo", "rotavirus"))) {
+            System.out.println("Voce tomou a vacina de 2 meses.");
+        } else if (meses == 4 && vacinas.containsAll(List.of("penta", "vip", "pneumo", "rotavirus"))) {
+            System.out.println("Voce tomou a vacina de 4 meses.");
+        } else if (meses == 6 && vacinas.containsAll(List.of("penta", "vip", "scr"))) {
+            System.out.println("Voce tomou a vacina de 6 meses.");
+        } else if (meses == 9 && vacinas.contains("febre amarela")) {
+            System.out.println("Voce tomou a vacina de 9 meses.");
+        } else if (meses == 12 && vacinas.containsAll(List.of("pneumo", "meningo", "scr"))) {
+            System.out.println("Voce tomou a vacina de 12 meses.");
+        } else if (meses == 15 && vacinas.containsAll(List.of("dtp", "vop", "hepatite a", "tetra viral"))) {
+            System.out.println("Voce tomou a vacina de 15 meses.");
+        } else if (meses > 15 && vacinas.containsAll(List.of("dtp", "vop", "varicela"))) {
+            System.out.println("Voce tomou a vacina de 4 anos.");
+        } else {
+            System.out.println("Nenhuma combinacao de vacinas corresponde à sua idade.");
+        }
+    }
+}
